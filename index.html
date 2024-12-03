@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Glossoest - Glossophobia Test</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f9;
+            color: #333;
+            margin: 0;
+            padding: 0;
+        }
+        header {
+            background-color: #4caf50;
+            color: white;
+            padding: 10px 20px;
+            text-align: center;
+        }
+        main {
+            max-width: 600px;
+            margin: 20px auto;
+            padding: 20px;
+            background: white;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+        }
+        h1, h2 {
+            text-align: center;
+        }
+        .question {
+            margin-bottom: 15px;
+        }
+        .btn {
+            display: block;
+            width: 100%;
+            padding: 10px;
+            margin-top: 10px;
+            background-color: #4caf50;
+            color: white;
+            border: none;
+            cursor: pointer;
+            border-radius: 5px;
+        }
+        .btn:hover {
+            background-color: #45a049;
+        }
+        .disclaimer {
+            font-size: 0.9em;
+            color: #777;
+            margin-top: 20px;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Glossoest</h1>
+        <p>Are you afraid of public speaking? Find out now!</p>
+    </header>
+    <main>
+        <h2>Test Your Glossophobia</h2>
+        <form id="quizForm">
+            <div class="question">
+                <label for="q1">1. Do you feel nervous or sweaty when asked to speak in front of a group?</label><br>
+                <input type="radio" name="q1" value="yes" required> Yes<br>
+                <input type="radio" name="q1" value="no"> No
+            </div>
+            <div class="question">
+                <label for="q2">2. Have you avoided situations where you might need to speak publicly?</label><br>
+                <input type="radio" name="q2" value="yes" required> Yes<br>
+                <input type="radio" name="q2" value="no"> No
+            </div>
+            <div class="question">
+                <label for="q3">3. Does the thought of public speaking make you anxious?</label><br>
+                <input type="radio" name="q3" value="yes" required> Yes<br>
+                <input type="radio" name="q3" value="no"> No
+            </div>
+            <button type="button" class="btn" onclick="calculateResult()">Submit</button>
+        </form>
+        <p id="result"></p>
+        <p class="disclaimer">Disclaimer: This test might not be accurate. Be careful! Glossophobia is the most common phobia.</p>
+    </main>
+    <script>
+        function calculateResult() {
+            const form = document.getElementById('quizForm');
+            const result = document.getElementById('result');
+            let score = 0;
+
+            const answers = new FormData(form);
+            answers.forEach(value => {
+                if (value === "yes") score++;
+            });
+
+            if (score >= 2) {
+                result.textContent = "You might have glossophobia. Consider exploring strategies to manage it.";
+            } else {
+                result.textContent = "You probably don't have glossophobia. Great job!";
+            }
+        }
+    </script>
+</body>
+</html>
