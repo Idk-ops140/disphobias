@@ -3,88 +3,131 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Glossoest - Glossophobia Test</title>
+    <title>Disphobias - Phobia Tests</title>
     <style>
         body {
             font-family: Arial, sans-serif;
-            background-color: #f4f4f9;
-            color: #333;
+            background-color: #121212;
+            color: #e0e0e0;
             margin: 0;
             padding: 0;
         }
         header {
-            background-color: #4caf50;
+            background-color: #1f1f1f;
             color: white;
-            padding: 10px 20px;
+            padding: 20px;
             text-align: center;
         }
         main {
-            max-width: 600px;
+            max-width: 800px;
             margin: 20px auto;
             padding: 20px;
-            background: white;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            background: #1f1f1f;
             border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
         }
         h1, h2 {
             text-align: center;
-        }
-        .question {
-            margin-bottom: 15px;
         }
         .btn {
             display: block;
             width: 100%;
             padding: 10px;
-            margin-top: 10px;
-            background-color: #4caf50;
+            margin: 10px 0;
+            background-color: #333;
             color: white;
             border: none;
             cursor: pointer;
             border-radius: 5px;
         }
         .btn:hover {
-            background-color: #45a049;
+            background-color: #444;
+        }
+        .test-section {
+            display: none;
+            margin-top: 20px;
         }
         .disclaimer {
             font-size: 0.9em;
-            color: #777;
-            margin-top: 20px;
+            color: #aaa;
             text-align: center;
+            margin-top: 20px;
+        }
+        .warning {
+            color: #ff4d4d;
+            font-weight: bold;
         }
     </style>
 </head>
 <body>
     <header>
-        <h1>Glossoest</h1>
-        <p>Are you afraid of public speaking? Find out now!</p>
+        <h1>Disphobias</h1>
+        <p>Test for common phobias. Age Rating: 13+ (16+ in Europe)</p>
     </header>
     <main>
-        <h2>Test Your Glossophobia</h2>
-        <form id="quizForm">
-            <div class="question">
-                <label for="q1">1. Do you feel nervous or sweaty when asked to speak in front of a group?</label><br>
+        <h2>Select a Test</h2>
+        <button class="btn" onclick="showTest('glossophobia')">Glossophobia Test</button>
+        <button class="btn" onclick="showTest('claustrophobia')">Claustrophobia Test</button>
+        <button class="btn" onclick="showTest('ptsd')">PTSD Test (18+)</button>
+
+        <div id="glossophobia" class="test-section">
+            <h3>Glossophobia Test</h3>
+            <form id="glossophobiaForm">
+                <label>Do you feel nervous or sweaty when asked to speak in front of a group?</label><br>
                 <input type="radio" name="q1" value="yes" required> Yes<br>
-                <input type="radio" name="q1" value="no"> No
-            </div>
-            <div class="question">
-                <label for="q2">2. Have you avoided situations where you might need to speak publicly?</label><br>
+                <input type="radio" name="q1" value="no"> No<br><br>
+
+                <label>Have you avoided situations where you might need to speak publicly?</label><br>
                 <input type="radio" name="q2" value="yes" required> Yes<br>
-                <input type="radio" name="q2" value="no"> No
-            </div>
-            <div class="question">
-                <label for="q3">3. Does the thought of public speaking make you anxious?</label><br>
-                <input type="radio" name="q3" value="yes" required> Yes<br>
-                <input type="radio" name="q3" value="no"> No
-            </div>
-            <button type="button" class="btn" onclick="calculateResult()">Submit</button>
-        </form>
+                <input type="radio" name="q2" value="no"> No<br><br>
+
+                <button type="button" class="btn" onclick="calculateResult('glossophobia')">Submit</button>
+            </form>
+        </div>
+
+        <div id="claustrophobia" class="test-section">
+            <h3>Claustrophobia Test</h3>
+            <form id="claustrophobiaForm">
+                <label>Do you feel panicked in small, enclosed spaces?</label><br>
+                <input type="radio" name="q1" value="yes" required> Yes<br>
+                <input type="radio" name="q1" value="no"> No<br><br>
+
+                <label>Have you avoided elevators or small rooms due to discomfort?</label><br>
+                <input type="radio" name="q2" value="yes" required> Yes<br>
+                <input type="radio" name="q2" value="no"> No<br><br>
+
+                <button type="button" class="btn" onclick="calculateResult('claustrophobia')">Submit</button>
+            </form>
+        </div>
+
+        <div id="ptsd" class="test-section">
+            <h3>PTSD Test (18+)</h3>
+            <p class="warning">Warning: This test may involve sensitive questions. Proceed with caution.</p>
+            <form id="ptsdForm">
+                <label>Do you frequently experience flashbacks or nightmares about a traumatic event?</label><br>
+                <input type="radio" name="q1" value="yes" required> Yes<br>
+                <input type="radio" name="q1" value="no"> No<br><br>
+
+                <label>Do you avoid reminders of a past traumatic experience?</label><br>
+                <input type="radio" name="q2" value="yes" required> Yes<br>
+                <input type="radio" name="q2" value="no"> No<br><br>
+
+                <button type="button" class="btn" onclick="calculateResult('ptsd')">Submit</button>
+            </form>
+        </div>
+
         <p id="result"></p>
-        <p class="disclaimer">Disclaimer: This test might not be accurate. Be careful! Glossophobia is the most common phobia.</p>
+        <p class="disclaimer">Disclaimer: These tests are not medically accurate. Consult a professional for accurate diagnosis.</p>
     </main>
     <script>
-        function calculateResult() {
-            const form = document.getElementById('quizForm');
+        function showTest(testId) {
+            const sections = document.querySelectorAll('.test-section');
+            sections.forEach(section => section.style.display = 'none');
+            document.getElementById(testId).style.display = 'block';
+        }
+
+        function calculateResult(testType) {
+            const form = document.getElementById(testType + 'Form');
             const result = document.getElementById('result');
             let score = 0;
 
@@ -93,11 +136,19 @@
                 if (value === "yes") score++;
             });
 
-            if (score >= 2) {
-                result.textContent = "You might have glossophobia. Consider exploring strategies to manage it.";
-            } else {
-                result.textContent = "You probably don't have glossophobia. Great job!";
+            let feedback = '';
+            switch (testType) {
+                case 'glossophobia':
+                    feedback = score >= 2 ? "You might have glossophobia." : "You probably don't have glossophobia.";
+                    break;
+                case 'claustrophobia':
+                    feedback = score >= 2 ? "You might have claustrophobia." : "You probably don't have claustrophobia.";
+                    break;
+                case 'ptsd':
+                    feedback = score >= 2 ? "You might have PTSD. Please consult a professional." : "You probably don't have PTSD.";
+                    break;
             }
+            result.textContent = feedback;
         }
     </script>
 </body>
